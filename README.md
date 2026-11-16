@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Mediafy
 
 Telegram bot MVP for downloading accessible social-media media you have permission to save.
@@ -48,3 +49,6 @@ By default `MAX_UPLOAD_MB=48` stays below the standard Bot API's 50 MB upload li
 - Download only content you own or are permitted to save; observe platform terms and applicable rights.
 - Never commit `.env` or authentication cookies.
 - Development version; validate live platform samples before production use.
+=======
+# mediafy
+>>>>>>> 93a7fd7439e97a6d1a73c4c3623b9ea862fda90e
