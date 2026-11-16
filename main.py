@@ -267,7 +267,11 @@ async def send_media(context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_id: 
     BUSY_USERS.add(user_id)
     try:
         async with DOWNLOAD_GATE:
-            await context.bot.edit_message_text(chat_id, message_id, "⏳ Downloading and processing…")
+            await context.bot.edit_message_text(
+                text="⏳ Downloading and processing…",
+                chat_id=chat_id,
+                message_id=message_id,
+            )
             await context.bot.send_chat_action(chat_id, ChatAction.UPLOAD_DOCUMENT)
             with tempfile.TemporaryDirectory(prefix="mediafy_") as tmp:
                 paths = await asyncio.to_thread(download_media, session.url, choice, Path(tmp))
@@ -286,11 +290,19 @@ async def send_media(context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_id: 
                         else:
                             await context.bot.send_document(chat_id, media)
                     sent += 1
-                await context.bot.edit_message_text(chat_id, message_id, f"✅ Sent {sent} file(s)." if sent else "No files fit the upload limit.")
+                await context.bot.edit_message_text(
+                    text=f"✅ Sent {sent} file(s)." if sent else "No files fit the upload limit.",
+                    chat_id=chat_id,
+                    message_id=message_id,
+                )
     except Exception as exc:
         log.exception("Download failed: %s", exc)
         try:
-            await context.bot.edit_message_text(chat_id, message_id, "❌ Download failed. The post might be restricted, unavailable or too large.")
+            await context.bot.edit_message_text(
+                text="❌ Download failed. The post might be restricted, unavailable or too large.",
+                chat_id=chat_id,
+                message_id=message_id,
+            )
         except TelegramError:
             pass
     finally:
